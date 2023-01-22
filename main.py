@@ -30,7 +30,7 @@ try:
                                         time.sleep(3)
                                         result = result.dice.value
                                         print(result)
-                                        if result == 0:
+                                        if result == 64:
                                                 score = 1
                                                 await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
                                                 db.plus_score(message.from_user.id, score)
