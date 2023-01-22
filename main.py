@@ -47,7 +47,7 @@ try:
         @dp.message_handler(commands='help')
         async def send_welcome(message: types.Message):
                 try:
-                        await bot.send_message(message.chat.id,'/score --> кол-во очков татрина в топориках, /start --> команда для прокрутки в зачете, /board --> таблица лидеров, Прошу к боту относиться с уважением он только родился и постпенно будет развиваться, devlope stagE: PRE-ALFA-TEST')
+                        await bot.send_message(message.chat.id,'/score --> кол-во очков татрина в топориках, /start --> команда для прокрутки в зачете, /board --> таблица лидеров, Прошу к боту относиться с уважением он только родился и постпенно будет развиваться, devlope stagE: PRE-ALFA-TEST'+ '\n'+ 'для тех кто хочет помочь с кодом или просто покапться в нем https://github.com/hace4/Bot_tg.git, создавайте свои ветки и пишите код!')
                 except MemoryError:
                         pass         
         @dp.message_handler(commands='board')
