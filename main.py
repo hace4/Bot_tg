@@ -12,7 +12,6 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 db = Database("C:\\Users\\shmel\\OneDrive\\Рабочий стол\\Dr.Gash\\Bot_tg\\casic_db.db")
-
 reply_markup=kb.inline_kb_full
 
 @dp.message_handler(commands='start')
@@ -20,7 +19,7 @@ async def send_welcome(message: types.Message):
         try:
                 if not db.user_exist(message.from_user.id):
                         db.add_user(message.from_user.id,)
-                        db.set_score(message.chat.id, 0)
+                        db.set_score(message.from_user.id, 0)
                         db.set_nickname(message.from_user.id, message.from_user.first_name)
                 await bot.send_message(message.chat.id, 'кол-во попыток')
                 @dp.message_handler()
@@ -30,8 +29,8 @@ async def send_welcome(message: types.Message):
                         for _ in range(int(loop)):
                                 result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
                                 time.sleep(3)
-                                db.set_score(message.from_user.id, score)
                                 result = result.dice.value
+                                print(result)
                                 if result == '64':
                                         score += 1
                                         await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
@@ -67,7 +66,7 @@ async def send_welcome(message: types.Message):
                 for i in ld_list:
                         k+=1
                         pop = leaderBoard[i]
-                        board+= '{k} место занимает --> c {i} топориками {pop}'.format(i=i, k=k, pop=pop) + '\n'
+                        board += '{k} место занимает --> c {i} топориками {pop}'.format(i=i, k=k, pop=pop) + '\n'
                 await bot.send_message(message.chat.id, board)
         except MemoryError:
                 pass
