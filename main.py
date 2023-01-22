@@ -1,8 +1,10 @@
 import logging, time
-from config import PATH, Token
+from config import PATH, Token, limit, time_limit
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types.reply_keyboard import ReplyKeyboardMarkup
 from db import Database
+from keyboards import keyboard
+from func import leader, help_text
 
 API_TOKEN = Token
 
@@ -12,9 +14,7 @@ logging.basicConfig(level=logging.INFO)
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 db = Database(PATH)
-main_button = ['/roll', '/score', '/board', '/help']
-keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
-keyboard.add(*main_button)
+
 try:
         @dp.message_handler(commands='start')
         async def send_welcome(message: types.Message):
@@ -27,21 +27,28 @@ try:
                             await bot.send_message(message.chat.id, 'Клава подьехала',reply_markup=keyboard)
                 except MemoryError:
                         pass
+                
+                
         @dp.message_handler(commands='roll')
         async def bot_read(message: types.Message):
                 await bot.send_message(message.chat.id, 'кол-во попыток',)
                 @dp.message_handler()
                 async def bot_read(message: types.Message):
+                        await bot.send_message(message.chat.id, "Лимит установленный админом = {limit}".format(limit = limit))
                         loop = message.text
-                        for _ in range(int(loop)):
-                                result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True, reply_markup=keyboard)
-                                time.sleep(3)
-                                result = result.dice.value
-                                print(result)
-                                if result == 64:
-                                        score = 1
-                                        await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
-                                        db.plus_score(message.from_user.id, score)
+                        if loop <= limit:
+                                for _ in range(int(loop)):
+                                        result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True, reply_markup=keyboard)
+                                        time.sleep(time_limit)
+                                        result = result.dice.value
+                                        if result == 64:
+                                                score = 1
+                                                await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
+                                                db.plus_score(message.from_user.id, score)
+                                        else:
+                                                await message.answer(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit}".format(limit = limit))
+                                        
+                                        
         @dp.message_handler(commands='score')
         async def send_welcome(message: types.Message):
                 try:
@@ -49,37 +56,20 @@ try:
                         await message.answer('Татарин  {name} заработал {score} топорика'.format(name=name, score=score), reply_markup=keyboard)
                 except MemoryError:
                         pass
+                
+                
         @dp.message_handler(commands='help')
         async def send_welcome(message: types.Message):
                 try:
-                        await bot.send_message(message.chat.id,'/score --> кол-во очков татрина в топориках, /start --> команда для участия в зачете,/roll --> комнада для прокрутки ,/board --> таблица лидеров, Прошу к боту относиться с уважением он только родился и постпенно будет развиваться, devlope stagE: PRE-ALFA-TEST'+ '\n'+ 'для тех кто хочет помочь с кодом или просто покапться в нем https://github.com/hace4/Bot_tg.git, создавайте свои ветки и пишите код!', reply_markup=keyboard)
+                        await bot.send_message(message.chat.id,help_text(), reply_markup=keyboard)
                 except MemoryError:
                         pass         
+                
+                
         @dp.message_handler(commands='board')
         async def send_welcome(message: types.Message):
-                try:
-                        leaderBoard = db.Get_table()
-                        print(leaderBoard)
-                        key_list = []
-                        for k in leaderBoard:
-                                key_list.append(int(k))
-                        ld_list = sorted(key_list)[::-1]
-                        key_list = []
-                        k = 0
-                        board = ''
-                        if len(ld_list) != 1:
-                                for i in ld_list:
-                                        k+=1
-                                        pop = leaderBoard[i]
-                                        board += '{k} место занимает --> c {i} топориками {pop}'.format(i=i, k=k, pop=pop) + '\n'
-                                await bot.send_message(message.chat.id, board, reply_markup=keyboard)
-                        else:
-                                for i in ld_list:
-                                        all_game = 'у всех татаринов по --> {i} топорика'.format(i=i)
-                                await bot.send_message(message.chat.id, all_game, reply_markup=keyboard)
-                                
-                except MemoryError:
-                        pass
+                await bot.send_message(message.chat.id, leader(), reply_markup=keyboard)
+
 except MemoryError:
         print('you have erro make code debuge')
 if __name__ == '__main__':
