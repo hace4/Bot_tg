@@ -62,11 +62,17 @@ try:
                         key_list = []
                         k = 0
                         board = ''
-                        for i in ld_list:
-                                k+=1
-                                pop = leaderBoard[i]
-                                board += '{k} место занимает --> c {i} топориками {pop}'.format(i=i, k=k, pop=pop) + '\n'
-                        await bot.send_message(message.chat.id, board)
+                        if len(ld_list) != 1:
+                                for i in ld_list:
+                                        k+=1
+                                        pop = leaderBoard[i]
+                                        board += '{k} место занимает --> c {i} топориками {pop}'.format(i=i, k=k, pop=pop) + '\n'
+                                await bot.send_message(message.chat.id, board)
+                        else:
+                                for i in ld_list:
+                                        all_game = 'у всех татаринов по --> {i} топорика'.format(i=i)
+                                await bot.send_message(message.chat.id, all_game)
+                                
                 except MemoryError:
                         pass
 except MemoryError:
