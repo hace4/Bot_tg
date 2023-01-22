@@ -5,6 +5,7 @@ from aiogram.types.reply_keyboard import ReplyKeyboardMarkup
 from db import Database
 from keyboards import keyboard
 from func import leader, help_text
+import datetime
 
 API_TOKEN = Token
 
@@ -69,8 +70,10 @@ try:
         @dp.message_handler(commands='board')
         async def send_welcome(message: types.Message):
                 await bot.send_message(message.chat.id, leader(), reply_markup=keyboard)
+        
 
 except MemoryError:
         print('you have erro make code debuge')
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
+        
