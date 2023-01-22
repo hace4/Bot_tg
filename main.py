@@ -5,7 +5,7 @@ from aiogram.types.reply_keyboard import ReplyKeyboardMarkup
 from db import Database
 from keyboards import keyboard
 from func import leader, help_text
-import datetime
+
 
 API_TOKEN = Token
 
