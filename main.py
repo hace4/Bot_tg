@@ -53,12 +53,12 @@ try:
                 await bot.send_message(message.chat.id, 'кол-во попыток',)
                 await bot.send_message(message.chat.id, "Лимит установленный админом = {limit}".format(limit = darts_limit))
                 @dp.message_handler()
-                async def bot_read(message: types.Message):
+                async def bot_read1(message: types.Message):
                         loop = message.text
                         all_rez2 = []
                         if int(loop) <= darts_limit:
                                 for _ in range(int(loop)):
-                                        await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
+                                        rwsult = await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
                                         time.sleep(time_limit)
                                         result2 = result2.dice.value
                                         all_rez2.append(int(result2))
