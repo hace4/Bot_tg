@@ -72,7 +72,7 @@ try:
         async def bot_read2(message: types.Message):
 
                 await bot.send_message(message.chat.id, 'кол-во попыток = 5',)
-                loop = 5
+                loop = 2
                 all_rez2 = []
                 if int(loop) <= darts_limit:
                         for _ in range(int(loop)):
