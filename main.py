@@ -22,23 +22,13 @@ try:
                 try:
                         if not db.user_exist(message.from_user.id):
                                 db.add_user(message.from_user.id,)
-                                db.set_score(message.from_user.id, 100)
+                                db.set_score(message.from_user.id, 0)
                                 db.set_nickname(message.from_user.id, message.from_user.first_name)
                                 print(message.from_user.id, message.from_user.first_name)
                         else:
                             await bot.send_message(message.chat.id, 'Клава подьехала',reply_markup=keyboard)
                 except MemoryError:
                         pass
-        
-        @dp.message_handler(commands='balanc')
-        async def send_welcome(message: types.Message):
-                try:
-                        if message.from_user.id == 736043856:
-                                db.plus_score(message.from_user.id, 100)
-                                await bot.send_message(message.chat.id, 'баланс пополнен',)
-                except MemoryError:
-                        pass
-
                 
         @dp.message_handler(commands='roll')
         async def bot_read(message: types.Message):
@@ -46,75 +36,18 @@ try:
                 await bot.send_message(message.chat.id, "Лимит установленный админом = {limit}".format(limit = limit))
                 @dp.message_handler()
                 async def bot_read(message: types.Message):
-                        name, score = db.get_nick_name(message.from_user.id)
                         loop = message.text
-                        db.minus_score(message.from_user.id, pay*loop)
-                        all_rez = []
-                        if (int(loop) <= limit or score >= pay) and (int(loop) <= limit and score >= pay):
+                        if int(loop) <= limit:
                                 for _ in range(int(loop)):
-                                        result = await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
+                                        result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
                                         time.sleep(time_limit)
                                         result = result.dice.value
-                                        all_rez.append(result)
-                                        db.plus_score(message.from_user.id, result)
                                         if result == 64:
-                                                await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ {name} ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ 64 БАЛЛА В КОПИЛКУ".format(name = name))
-                                                db.plus_score(message.from_user.id, result)
-                                all_rez = sum(all_rez)
-                                await bot.send_message(message.chat.id, 'За эту прокрутку {name} заработал {all_rez}'.format(name = name, all_rez=all_rez))
+                                                score = 1
+                                                await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
+                                                db.plus_score(message.from_user.id, score)
                         else:
-                                await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = limit))
-                                
-                                
-        @dp.message_handler(commands='darts')
-        async def bot_read(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток',)
-                await bot.send_message(message.chat.id, "Лимит установленный админом = {limit}".format(limit = darts_limit))
-                @dp.message_handler()
-                async def bot_read(message: types.Message):
-                        name, score = db.get_nick_name(message.from_user.id)
-                        loop = message.text
-                        db.minus_score(message.from_user.id, pay_darts*loop)
-                        all_rez = []
-                        if (int(loop) <= darts_limit or score >= pay_darts) and (int(loop) <= darts_limit and score >= pay_darts):
-                                for _ in range(int(loop)):
-                                        result = await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
-                                        time.sleep(time_limit)
-                                        result = result.dice.value
-                                        all_rez.append(result)
-                                        db.plus_score(message.from_user.id, result)
-                                        if result == 6:
-                                                await bot.send_message(message.chat.id, "{name} ЕЕЕЕЕЕЕЙ ТОЧНО В ЦЕЬ ПОКОРНЫ ЛОВИ 6 БАЛЛА В КОПИЛКУ".format(name = name))
-                                                db.plus_score(message.from_user.id, result)
-                                all_rez = sum(all_rez)
-                                await bot.send_message(message.chat.id, 'За эти броски {name} заработал {all_rez}'.format(name = name, all_rez=all_rez))
-                        else:
-                                await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = darts_limit))
-                                
-        @dp.message_handler(commands='dies')
-        async def bot_read(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток',)
-                await bot.send_message(message.chat.id, "Лимит установленный админом = {limit}".format(limit = dice_limit))
-                @dp.message_handler()
-                async def bot_read(message: types.Message):
-                        name, score = db.get_nick_name(message.from_user.id)
-                        loop = message.text
-                        db.minus_score(message.from_user.id, pay_darts*loop)
-                        all_rez = []
-                        if (int(loop) <= dice_limit or score >= pay_darts) and (int(loop) <= dice_limit and score >= pay_darts):
-                                for _ in range(int(loop)):
-                                        result = await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
-                                        time.sleep(time_limit)
-                                        result = result.dice.value
-                                        all_rez.append(result)
-                                        db.plus_score(message.from_user.id, result)
-                                        if result == 6:
-                                                await bot.send_message(message.chat.id, "{name} ЕЕЕЕЕЕЕЙ ТОЧНО В ЦЕЬ ПОКОРНЫ ЛОВИ 6 БАЛЛА В КОПИЛКУ".format(name = name))
-                                                db.plus_score(message.from_user.id, result)
-                                all_rez = sum(all_rez)
-                                await bot.send_message(message.chat.id, 'За эти броски {name} заработал {all_rez}'.format(name = name, all_rez=all_rez))
-                        else:
-                                await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = dice_limit))
+                                await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit}".format(limit = limit))
                                         
                                         
         @dp.message_handler(commands='score')
@@ -158,11 +91,8 @@ try:
                 
                 except MemoryError:
                         pass
-
         
-
 except MemoryError:
         print('you have erro make code debuge')
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
-        
