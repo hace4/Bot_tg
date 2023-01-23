@@ -55,7 +55,7 @@ try:
                 all_rez2 = []
                 if int(loop) <= darts_limit:
                         for _ in range(int(loop)):
-                                rwsult =await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
+                                result2 =await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
                                 time.sleep(time_limit)
                                 result2 = result2.dice.value
                                 all_rez2.append(int(result2))
