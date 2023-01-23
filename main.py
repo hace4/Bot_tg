@@ -37,15 +37,11 @@ try:
                 @dp.message_handler()
                 async def bot_read(message: types.Message):
                         loop = message.text
-                        k = 0
                         if int(loop) <= limit:
-                                for _ in range(int(loop)-1):
+                                for _ in range(int(loop)):
                                         result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
                                         time.sleep(time_limit)
                                         result = result.dice.value
-                                        k -= 1
-                                        if k == int(loop) - 1:
-                                                result = await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True, reply_markup=keyboard)
                                         if result == 64:
                                                 score = 1
                                                 await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
