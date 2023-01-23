@@ -73,26 +73,8 @@ try:
                                 
         @dp.message_handler(commands='dies')
         async def bot_read2(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток',)
-                await bot.send_message(message.chat.id, "Лимит установленный админом = {limit}".format(limit = dice_limit))
-                @dp.message_handler()
-                async def bot_read(message: types.Message):
-                        loop = message.text
-                        all_rez1 = []
-                        if int(loop) <= dice_limit:
-                                for _ in range(int(loop)):
-                                        result1 = await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
-                                        time.sleep(time_limit)
-                                        result1 = result1.dice.value
-                                        all_rez.append(int(result1))
-                                        db.plus_score(message.from_user.id, result1)
-                                        if result1 == 6:
-                                                await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТОЧНО В ЦЕЬ  ЛОВИ 6 БАЛЛОВ В КОПИЛКУ".format)
-                                                db.plus_score(message.from_user.id, result1)
-                                all_rez = sum(all_rez1)
-                                await bot.send_message(message.chat.id, 'За эти броски {name} заработал {all_rez}'.format(all_rez=all_rez1))
-                        else:
-                                await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = dice_limit))
+
+                await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
                                         
         @dp.message_handler(commands='score')
         async def send_welcome(message: types.Message):
