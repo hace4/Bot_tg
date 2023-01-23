@@ -32,23 +32,18 @@ try:
                 
         @dp.message_handler(commands='roll')
         async def bot_read(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток',)
-                await bot.send_message(message.chat.id, "Лимит установленный админом = {limit}".format(limit = limit))
-                @dp.message_handler()
-                async def bot_read(message: types.Message):
-                        loop = message.text
-                        if int(loop) <= limit:
-                                for _ in range(int(loop)):
-                                        result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
-                                        time.sleep(time_limit)
-                                        db.plus_score(message.from_user.id, result)
-                                        result = result.dice.value
-                                        if result == 64:
-                                                score = 1
-                                                await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
-                                                db.plus_score(message.from_user.id, result)
-                        else:
-                                await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit}".format(limit = limit))
+                await bot.send_message(message.chat.id, 'кол-во попыток{limit}'.format(limit = limit))
+                loop = 10
+                for _ in range(int(loop)):
+                        result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
+                        time.sleep(time_limit)
+                        db.plus_score(message.from_user.id, result)
+                        result = result.dice.value
+                        if result == 64:
+                                score = 1
+                                await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
+                                db.plus_score(message.from_user.id, result)
+
         @dp.message_handler(commands='darts')
         @dp.message_handler(commands='darts')
         async def bot_read1(message: types.Message):
