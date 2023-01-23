@@ -30,6 +30,9 @@ class Database:
     def plus_score(self, user_id, score):
             with self.connection:
                 return self.cursor.execute("UPDATE `champion_sheep` SET `score` =  `score` +? WHERE `user_id` = ?", (score, user_id))
+    def minus_score(self, user_id, score):
+            with self.connection:
+                return self.cursor.execute("UPDATE `champion_sheep` SET `score` =  `score` -? WHERE `user_id` = ?", (score, user_id))
             
     def Get_table(self):
         self.cursor.execute("""SELECT * from champion_sheep""")
