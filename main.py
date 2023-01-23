@@ -24,6 +24,7 @@ try:
                                 db.add_user(message.from_user.id,)
                                 db.set_score(message.from_user.id, 0)
                                 db.set_nickname(message.from_user.id, message.from_user.first_name)
+                                print(message.from_user.id, message.from_user.first_name)
                         else:
                             await bot.send_message(message.chat.id, 'Клава подьехала',reply_markup=keyboard)
                 except MemoryError:
