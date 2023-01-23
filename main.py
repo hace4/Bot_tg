@@ -71,7 +71,23 @@ try:
         @dp.message_handler(commands='dies')
         async def bot_read2(message: types.Message):
 
-                await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
+                await bot.send_message(message.chat.id, 'кол-во попыток = 5',)
+                loop = 5
+                all_rez2 = []
+                if int(loop) <= darts_limit:
+                        for _ in range(int(loop)):
+                                result2 = await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
+                                time.sleep(time_limit)
+                                result2 = result2.dice.value
+                                all_rez2.append(int(result2))
+                                db.plus_score(message.from_user.id, result2)
+                                if result2 == 6:
+                                        await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТОЧНО В ЦЕЬ ПОКОРНЫ ЛОВИ 6 БАЛЛА В КОПИЛКУ")
+                                        db.plus_score(message.from_user.id, result2)
+                        all_rez2 = sum(all_rez2)
+                        await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
+                else:
+                        await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = darts_limit))
                                         
         @dp.message_handler(commands='score')
         async def send_welcome(message: types.Message):
