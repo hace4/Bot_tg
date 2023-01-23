@@ -91,7 +91,7 @@ try:
                         else:
                                 await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = darts_limit))
                                 
-        @dp.message_handler(commands='darts')
+        @dp.message_handler(commands='dies')
         async def bot_read(message: types.Message):
                 await bot.send_message(message.chat.id, 'кол-во попыток',)
                 await bot.send_message(message.chat.id, "Лимит установленный админом = {limit}".format(limit = dice_limit))
@@ -103,7 +103,7 @@ try:
                         all_rez = []
                         if (int(loop) <= dice_limit or score >= pay_darts) and (int(loop) <= dice_limit and score >= pay_darts):
                                 for _ in range(int(loop)):
-                                        result = await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
+                                        result = await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
                                         time.sleep(time_limit)
                                         result = result.dice.value
                                         all_rez.append(result)
