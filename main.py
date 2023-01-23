@@ -69,7 +69,29 @@ try:
                 
         @dp.message_handler(commands='board')
         async def send_welcome(message: types.Message):
-                await bot.send_message(message.chat.id, leader(), reply_markup=keyboard)
+                
+                try:
+                        leaderBoard = db.Get_table()
+                        key_list = []
+                        for k in leaderBoard:
+                                key_list.append(int(k))
+                        ld_list = sorted(key_list)[::-1]
+                        k = 0
+                        board = ''
+                        if len(ld_list) != 1:
+                                for i in ld_list:
+                                        k+=1
+                                        pop = leaderBoard[i]
+                                        board += '{k} место занимает --> c {i} топориками {pop}'.format(i=i, k=k, pop=pop) + '\n'
+                                await bot.send_message(message.chat.id, board, reply_markup=keyboard)
+                        else:
+                                for i in ld_list:
+                                        all_game = 'у всех татаринов по --> {i} топорика'.format(i=i)
+                                await bot.send_message(message.chat.id, all_game, reply_markup=keyboard)
+                
+                except MemoryError:
+                        pass
+
         
 
 except MemoryError:
