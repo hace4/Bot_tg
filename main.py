@@ -1,5 +1,5 @@
 import logging, time
-from config import PATH, Token, limit, time_limit, pay, pay_darts, dice_limit, darts_limit
+from config import PATH, Token, time_limit, pay, pay_darts, pay_dies, loop_dies, loop_roll, loop_darts
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types.reply_keyboard import ReplyKeyboardMarkup
 from db import Database
@@ -41,13 +41,12 @@ try:
                 
         @dp.message_handler(commands='roll')
         async def bot_read(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток {limit}, , Стоимость = 280'.format(limit = limit))
-                loop = 10
+                await bot.send_message(message.chat.id, 'кол-во попыток {loop_roll}, Стоимость = {pay}'.format(loop_roll = loop_roll, pay=(pay*loop_roll)))
                 all_rez2 = []
                 your_score = db.get_score(message.from_user.id)
                 if int(your_score) >= 280:
-                        db.minus_score(message.from_user.id, pay*10)
-                        for _ in range(int(loop)):
+                        db.minus_score(message.from_user.id, pay*loop_roll)
+                        for _ in range(loop_roll):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
                                 time.sleep(time_limit)
                                 result2 = result2.dice.value
@@ -62,13 +61,12 @@ try:
 
         @dp.message_handler(commands='darts')
         async def bot_read1(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток = 5 , Стоимость = 25',)
-                loop = 5
+                await bot.send_message(message.chat.id, 'кол-во попыток = {loop_darts} , Стоимость = {pay_darts}'.format(loop_darts=loop_darts, pay_darts=(pay_darts*loop_darts)),)
                 all_rez2 = []
-                db.minus_score(message.from_user.id, pay_darts*5)
+                db.minus_score(message.from_user.id, pay_darts*loop_darts)
                 your_score = db.get_score(message.from_user.id)
                 if int(your_score) >= 25:
-                        for _ in range(int(loop)):
+                        for _ in range(loop_darts):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
                                 time.sleep(time_limit)
                                 result2 = result2.dice.value
@@ -84,13 +82,12 @@ try:
         @dp.message_handler(commands='dies')
         async def bot_read2(message: types.Message):
 
-                await bot.send_message(message.chat.id, 'кол-во попыток = 4, Стоимость = 10',)
-                loop = 4
+                await bot.send_message(message.chat.id, 'кол-во попыток = {loop_dies}, Стоимость = {pay_dies}'.format(loop_dies=loop_dies, pay_dies=(pay_dies*loop_dies)),)
                 all_rez2 = []
-                db.minus_score(message.from_user.id, pay_darts*2)
+                db.minus_score(message.from_user.id, pay_dies*loop_dies)
                 your_score = db.get_score(message.from_user.id)
                 if int(your_score) >= 10:
-                        for _ in range(int(loop)):
+                        for _ in range(loop_dies):
                                 result2 = await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
                                 time.sleep(time_limit)
                                 result2 = result2.dice.value

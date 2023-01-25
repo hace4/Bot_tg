@@ -1,8 +1,11 @@
 Token = "5962697381:AAHaUwRL4Y6E4K870KsGiU8_BVL0vLmUzUw"
 PATH = "casic_db.db"
-limit = 10
+loop_roll = 10
+loop_dies = 2
+loop_darts = 5
 time_limit = 3
 pay = 28
 pay_darts = 5
+pay_dies = 3
 dice_limit = 5
 darts_limit = 5
