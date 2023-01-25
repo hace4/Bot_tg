@@ -90,7 +90,7 @@ try:
         async def send_welcome(message: types.Message):
                 try:
                         name, score = db.get_nick_name(message.from_user.id)
-                        await message.answer('Татарин  {name} заработал {score} топорика'.format(name=name, score=score), reply_markup=keyboard)
+                        await message.answer('Татарин  {name} заработал {score} топорика'.format(name=name, score=score))
                 except MemoryError:
                         pass
                 
@@ -98,7 +98,7 @@ try:
         @dp.message_handler(commands='help')
         async def send_welcome(message: types.Message):
                 try:
-                        await bot.send_message(message.chat.id,help_text(), reply_markup=keyboard)
+                        await bot.send_message(message.chat.id,help_text())
                 except MemoryError:
                         pass         
                 
@@ -123,7 +123,7 @@ try:
                         else:
                                 for i in ld_list:
                                         all_game = 'у всех татаринов по --> {i} топорика'.format(i=i)
-                                await bot.send_message(message.chat.id, all_game, reply_markup=keyboard)
+                                await bot.send_message(message.chat.id, all_game)
                 
                 except MemoryError:
                         pass
