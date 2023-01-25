@@ -34,17 +34,21 @@ try:
         async def bot_read(message: types.Message):
                 await bot.send_message(message.chat.id, 'кол-во попыток {limit}'.format(limit = limit))
                 loop = 10
+                all_rez2 = []
                 for _ in range(10):
+                        
                         result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
                         time.sleep(time_limit)
-                        db.plus_score(message.from_user.id, int(result))
                         result = result.dice.value
+                        all_rez2.append(int(result))
+                        db.plus_score(message.from_user.id, result)
                         if result == 64:
                                 score = 1
                                 await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
                                 db.plus_score(message.from_user.id, result)
+                        all_rez2 = sum(all_rez2)
+                        await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
 
-        @dp.message_handler(commands='darts')
         @dp.message_handler(commands='darts')
         async def bot_read1(message: types.Message):
                 await bot.send_message(message.chat.id, 'кол-во попыток = 5',)
