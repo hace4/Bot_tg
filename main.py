@@ -41,7 +41,7 @@ try:
                 
         @dp.message_handler(commands='roll')
         async def bot_read(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток {limit}, , Стоимость = 250'.format(limit = limit))
+                await bot.send_message(message.chat.id, 'кол-во попыток {limit}, , Стоимость = 280'.format(limit = limit))
                 loop = 10
                 all_rez2 = []
                 loop = 10

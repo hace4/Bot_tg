@@ -1,6 +1,6 @@
 Token = "5962697381:AAHaUwRL4Y6E4K870KsGiU8_BVL0vLmUzUw"
 PATH = "casic_db.db"
-limit = 25
+limit = 28
 time_limit = 3
 pay = 10
 pay_darts = 5
