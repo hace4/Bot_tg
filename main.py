@@ -32,7 +32,7 @@ try:
                 
         @dp.message_handler(commands='roll')
         async def bot_read(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток {limit}'.format(limit = limit))
+                await bot.send_message(message.chat.id, 'кол-во попыток {limit}, , Стоимость = 100'.format(limit = limit))
                 loop = 10
                 all_rez2 = []
                 loop = 5
@@ -54,9 +54,10 @@ try:
 
         @dp.message_handler(commands='darts')
         async def bot_read1(message: types.Message):
-                await bot.send_message(message.chat.id, 'кол-во попыток = 5',)
+                await bot.send_message(message.chat.id, 'кол-во попыток = 5 , Стоимость = 25',)
                 loop = 5
                 all_rez2 = []
+                db.minus_score(message.from_user.id, pay_darts*5)
                 if int(loop) <= darts_limit:
                         for _ in range(int(loop)):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
@@ -75,9 +76,10 @@ try:
         @dp.message_handler(commands='dies')
         async def bot_read2(message: types.Message):
 
-                await bot.send_message(message.chat.id, 'кол-во попыток = 5',)
-                loop = 2
+                await bot.send_message(message.chat.id, 'кол-во попыток = 5, Стоимость = 10',)
+                loop = 4
                 all_rez2 = []
+                db.minus_score(message.from_user.id, pay_darts*2)
                 if int(loop) <= darts_limit:
                         for _ in range(int(loop)):
                                 result2 = await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
