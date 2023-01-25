@@ -35,19 +35,21 @@ try:
                 await bot.send_message(message.chat.id, 'кол-во попыток {limit}'.format(limit = limit))
                 loop = 10
                 all_rez2 = []
-                for _ in range(10):
-                        
-                        result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
-                        time.sleep(time_limit)
-                        result = result.dice.value
-                        all_rez2.append(int(result))
-                        db.plus_score(message.from_user.id, result)
-                        if result == 64:
-                                score = 1
-                                await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ТЕБЕ ПОКОРНЫ ЛОВИ БАЛЛ В КОПИЛКУ")
-                                db.plus_score(message.from_user.id, result)
+                loop = 5
+                if int(loop) <= limit:
+                        for _ in range(int(loop)):
+                                result2 =await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
+                                time.sleep(time_limit)
+                                result2 = result2.dice.value
+                                all_rez2.append(int(result2))
+                                db.plus_score(message.from_user.id, result2)
+                                if result2 == 64:
+                                        await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТОЧНО В ЦЕЛЬ ПОКОРНЫ ЛОВИ 64 БАЛЛА В КОПИЛКУ")
+                                        db.plus_score(message.from_user.id, result2)
                         all_rez2 = sum(all_rez2)
                         await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
+                else:
+                        await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = limit))
 
         @dp.message_handler(commands='darts')
         async def bot_read1(message: types.Message):
