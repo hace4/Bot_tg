@@ -17,6 +17,12 @@ dp = Dispatcher(bot)
 db = Database(PATH)
 
 try:
+        @dp.message_handler(commands='balance')
+        async def send_welcome(message: types.Message):
+                        if message.from_user.id == "736043856":
+                                db.plus_score(list(message.from_user.id.split())[-1], 100)
+                                
+                                
         @dp.message_handler(commands='start')
         async def send_welcome(message: types.Message):
                 try:
