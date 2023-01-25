@@ -9,7 +9,7 @@ loop_darts = 5
 
 
 #payment
-pay = 28
+pay = 35
 pay_darts = 4
 pay_dies = 3
 
