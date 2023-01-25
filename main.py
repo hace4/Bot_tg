@@ -20,7 +20,8 @@ try:
         @dp.message_handler(commands='balance')
         async def send_welcome(message: types.Message):
                         if message.from_user.id == 736043856:
-                                db.plus_score(list(message.from_user.id.split())[-1], 100)
+                                print(list(message.text.split())[-1])
+                                db.plus_score(list(message.text.split())[-1], 100)
                                 await bot.send_message(message.chat.id, 'Клава подьехала',reply_markup=keyboard)
                         await bot.send_message(message.chat.id, 'Клава уеехала',reply_markup=keyboard)
                                 
