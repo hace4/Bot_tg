@@ -37,6 +37,7 @@ try:
                 all_rez2 = []
                 loop = 5
                 if int(loop) <= limit:
+                        db.minus_score(message.from_user.id, pay*10)
                         for _ in range(int(loop)):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
                                 time.sleep(time_limit)
