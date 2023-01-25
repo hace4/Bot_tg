@@ -44,8 +44,9 @@ try:
                 await bot.send_message(message.chat.id, 'кол-во попыток {limit}, , Стоимость = 100'.format(limit = limit))
                 loop = 10
                 all_rez2 = []
-                loop = 5
-                if int(loop) <= limit:
+                loop = 10
+                your_score = db.get_score(message.from_user.id)
+                if your_score >= 100:
                         db.minus_score(message.from_user.id, pay*10)
                         for _ in range(int(loop)):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
@@ -59,7 +60,7 @@ try:
                         all_rez2 = sum(all_rez2)
                         await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
                 else:
-                        await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = limit))
+                        await bot.send_message(message.chat.id, "У вас недосаточно очков ваши очки {your_score}".format(your_score=your_score))
 
         @dp.message_handler(commands='darts')
         async def bot_read1(message: types.Message):
@@ -67,7 +68,8 @@ try:
                 loop = 5
                 all_rez2 = []
                 db.minus_score(message.from_user.id, pay_darts*5)
-                if int(loop) <= darts_limit:
+                your_score = db.get_score(message.from_user.id)
+                if your_score >= 25:
                         for _ in range(int(loop)):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
                                 time.sleep(time_limit)
@@ -80,7 +82,7 @@ try:
                         all_rez2 = sum(all_rez2)
                         await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
                 else:
-                        await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = darts_limit))
+                        await bot.send_message(message.chat.id, "У вас недосаточно очков ваши очки {your_score}".format(your_score=your_score))
                         
         @dp.message_handler(commands='dies')
         async def bot_read2(message: types.Message):
@@ -89,7 +91,8 @@ try:
                 loop = 4
                 all_rez2 = []
                 db.minus_score(message.from_user.id, pay_darts*2)
-                if int(loop) <= darts_limit:
+                your_score = db.get_score(message.from_user.id)
+                if your_score >= 10:
                         for _ in range(int(loop)):
                                 result2 = await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
                                 time.sleep(time_limit)
@@ -102,7 +105,7 @@ try:
                         all_rez2 = sum(all_rez2)
                         await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
                 else:
-                        await bot.send_message(message.chat.id, "Вы привысили лимит разовых сообщений равный: {limit} или недосаточно очков".format(limit = darts_limit))
+                         await bot.send_message(message.chat.id, "У вас недосаточно очков ваши очки {your_score}".format(your_score=your_score))
                                         
         @dp.message_handler(commands='score')
         async def send_welcome(message: types.Message):

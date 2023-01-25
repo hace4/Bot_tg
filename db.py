@@ -23,6 +23,14 @@ class Database:
         for row in result1:
             score = str(row[0])
             return nickname, score
+        
+        
+    def get_score(self, user_id):
+        result1 = self.cursor.execute("SELECT `score` FROM `champion_sheep` WHERE `user_id` = ?", (user_id,)).fetchall()
+        for row in result1:
+            score = str(row[0])
+            return  score
+        
     def set_score(self, user_id, score):
         with self.connection:
             return self.cursor.execute("UPDATE `champion_sheep` SET `score` =   ? WHERE `user_id` = ?", (score, user_id))
