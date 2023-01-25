@@ -37,7 +37,7 @@ try:
                 for _ in range(10):
                         result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
                         time.sleep(time_limit)
-                        db.plus_score(message.from_user.id, result)
+                        db.plus_score(message.from_user.id, int(result))
                         result = result.dice.value
                         if result == 64:
                                 score = 1
