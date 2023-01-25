@@ -31,7 +31,7 @@ try:
                 try:
                         if not db.user_exist(message.from_user.id):
                                 db.add_user(message.from_user.id,)
-                                db.set_score(message.from_user.id, 0)
+                                db.set_score(message.from_user.id, 300)
                                 db.set_nickname(message.from_user.id, message.from_user.first_name)
                                 print(message.from_user.id, message.from_user.first_name)
                         else:
@@ -44,9 +44,8 @@ try:
                 await bot.send_message(message.chat.id, 'кол-во попыток {limit}, , Стоимость = 280'.format(limit = limit))
                 loop = 10
                 all_rez2 = []
-                loop = 10
                 your_score = db.get_score(message.from_user.id)
-                if int(your_score) >= 100:
+                if int(your_score) >= 280:
                         db.minus_score(message.from_user.id, pay*10)
                         for _ in range(int(loop)):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
