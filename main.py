@@ -46,7 +46,7 @@ try:
                 all_rez2 = []
                 loop = 10
                 your_score = db.get_score(message.from_user.id)
-                if your_score >= 100:
+                if int(your_score) >= 100:
                         db.minus_score(message.from_user.id, pay*10)
                         for _ in range(int(loop)):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
@@ -69,7 +69,7 @@ try:
                 all_rez2 = []
                 db.minus_score(message.from_user.id, pay_darts*5)
                 your_score = db.get_score(message.from_user.id)
-                if your_score >= 25:
+                if int(your_score) >= 25:
                         for _ in range(int(loop)):
                                 result2 =await bot.send_dice(message.chat.id, emoji='🎯', disable_notification=True)
                                 time.sleep(time_limit)
@@ -92,7 +92,7 @@ try:
                 all_rez2 = []
                 db.minus_score(message.from_user.id, pay_darts*2)
                 your_score = db.get_score(message.from_user.id)
-                if your_score >= 10:
+                if int(your_score) >= 10:
                         for _ in range(int(loop)):
                                 result2 = await bot.send_dice(message.chat.id, emoji='🎲', disable_notification=True)
                                 time.sleep(time_limit)
