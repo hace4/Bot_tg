@@ -34,7 +34,7 @@ try:
         async def bot_read(message: types.Message):
                 await bot.send_message(message.chat.id, 'кол-во попыток {limit}'.format(limit = limit))
                 loop = 10
-                for _ in range(int(loop)):
+                for _ in range(10):
                         result =   await bot.send_dice(message.chat.id, emoji='🎰', disable_notification=True)
                         time.sleep(time_limit)
                         db.plus_score(message.from_user.id, result)
