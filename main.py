@@ -87,7 +87,7 @@ try:
         @dp.message_handler(commands='dies')
         async def bot_read2(message: types.Message):
 
-                await bot.send_message(message.chat.id, 'кол-во попыток = 5, Стоимость = 10',)
+                await bot.send_message(message.chat.id, 'кол-во попыток = 4, Стоимость = 10',)
                 loop = 4
                 all_rez2 = []
                 db.minus_score(message.from_user.id, pay_darts*2)
