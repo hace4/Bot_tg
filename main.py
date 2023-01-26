@@ -83,6 +83,7 @@ try:
                 if result2 == 6:
                     await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТОЧНО В ЦЕЛЬ ПОКОРНЫ ЛОВИ 6 БАЛЛА В КОПИЛКУ")
                     db.plus_score(message.from_user.id, result2)
+                    all_rez2.append(int(result2))
             all_rez2 = sum(all_rez2)
             await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
         else:
@@ -110,6 +111,7 @@ try:
                 if result2 == 6:
                     await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТОЧНО В ЦЕЬ ПОКОРНЫ ЛОВИ 6 БАЛЛА В КОПИЛКУ")
                     db.plus_score(message.from_user.id, result2)
+                    all_rez2.append(int(result2))
             all_rez2 = sum(all_rez2)
             await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
         else:
