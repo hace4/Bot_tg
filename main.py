@@ -54,7 +54,7 @@ try:
                 all_rez2.append(int(result2))
                 db.plus_score(message.from_user.id, result2)
                 if result2 == 64:
-                    await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ПРИЗ {jack} БАЛЛОВ В КОПИЛКУ").format(jack=jack)
+                    await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ПРИЗ {jack} БАЛЛОВ В КОПИЛКУ".format(jack=jack))
                     db.plus_score(message.from_user.id, jack)
                     all_rez2.append(int(jack))
             all_rez2 = sum(all_rez2)
