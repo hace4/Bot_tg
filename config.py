@@ -6,7 +6,8 @@ PATH = "casic_db.db"
 loop_roll = 10
 loop_dies = 2
 loop_darts = 5
-
+#jack_pot
+jack = 1000
 
 #payment
 pay = 35

@@ -1,5 +1,5 @@
 import logging, time
-from config import PATH, Token, time_limit, pay, pay_darts, pay_dies, loop_dies, loop_roll, loop_darts
+from config import PATH, Token, time_limit, pay, pay_darts, pay_dies, loop_dies, loop_roll, loop_darts, jack
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types.reply_keyboard import ReplyKeyboardMarkup
 from db import Database
@@ -54,8 +54,9 @@ try:
                 all_rez2.append(int(result2))
                 db.plus_score(message.from_user.id, result2)
                 if result2 == 64:
-                    await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТОЧНО В ЦЕЛЬ ПОКОРНЫ ЛОВИ 64 БАЛЛА В КОПИЛКУ")
-                    db.plus_score(message.from_user.id, result2)
+                    await bot.send_message(message.chat.id, "ЕЕЕЕЕЕЕЙ ТРИ ТОПОРА ПРИЗ {jack} БАЛЛОВ В КОПИЛКУ").format(jack=jack)
+                    db.plus_score(message.from_user.id, jack)
+                    all_rez2.append(int(jack))
             all_rez2 = sum(all_rez2)
             await bot.send_message(message.chat.id, 'За эти броски заработал {all_rez}'.format(all_rez=all_rez2))
         else:
